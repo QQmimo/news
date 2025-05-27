@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.top_menu {
+    display: flex;
+    background-color: #c1b7ff;
+    position: sticky;
+    top: 0;
+    padding: 0 35px;
+    justify-content: space-between;
+
+    .logo {
+        height: 50px;
+    }
+}

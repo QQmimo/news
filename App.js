@@ -1,11 +1,9 @@
-import { NewsFramework } from "./Frameworks";
-import { News } from "./UI";
+import { News, TopMenu } from "./UI";
 
 (async () => {
-    const news = new News();
-    const newsFramework = new NewsFramework();
-    const posts = await newsFramework.getNews();
-    const listOfNews = news.drawList(posts);
+    const news = await new News().render();
+    document.getElementById('app')?.appendChild(news);
 
-    document.getElementById('app')?.appendChild(listOfNews);
+    const menu = new TopMenu().render();
+    document.getElementById('menu')?.appendChild(menu);
 })();

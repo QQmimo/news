@@ -1,7 +1,7 @@
 import { Repository } from "../Repositories";
 
 export class NewsRepository extends Repository {
-    async getNews() {
+    async getAllNews() {
         return this._Request.get(`https://jsonplaceholder.typicode.com/posts`);
     }
 

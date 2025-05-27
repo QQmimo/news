@@ -1,0 +1,28 @@
+.news_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    &_banner {
+        width: 100%;
+    }
+
+    &_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &_title {
+        font-size: 18pt;
+    }
+}

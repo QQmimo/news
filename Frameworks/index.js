@@ -1,0 +1,1 @@
+export { NewsFramework } from "./NewsFramework";

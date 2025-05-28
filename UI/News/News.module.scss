@@ -53,7 +53,7 @@
 
 .view {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 20px;
     gap: 10px;
     align-items: flex-start;
@@ -63,6 +63,21 @@
     }
 
     &_content {
+        display: flex;
+        flex-direction: row;
         flex: 1;
+        gap: 10px;
+    }
+
+    .comments_list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .feedback {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 }

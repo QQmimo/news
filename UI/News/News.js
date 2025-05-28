@@ -30,9 +30,17 @@ export class News {
     _drawPost(data) {
         const card = document.createElement('div');
         card.className = styles.card;
-        card.onclick = () => {
+        card.role = 'button';
+        card.tabIndex = 0;
+        const click = () => {
             window.location.search = '';
             window.location.search += `post=${data.Post.id}`;
+        }
+        card.onclick = click;
+        card.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === 'NumpadEnter') {
+                click();
+            }
         }
 
         const banner = document.createElement('img');
@@ -71,12 +79,14 @@ export class News {
         const block = document.createElement('div');
         block.className = styles.view;
 
+        const content = document.createElement('div');
+        content.className = styles.view_content;
+
         const banner = document.createElement('img');
         banner.className = styles.view_banner;
         banner.src = post.ImageUrl;
 
-        const content = document.createElement('div');
-        content.className = styles.view_content;
+        const text = document.createElement('div');
 
         const title = document.createElement('div');
         title.textContent = post.Post.title;
@@ -88,18 +98,21 @@ export class News {
         body.textContent = post.Post.body;
 
         const feedback = document.createElement('div');
+        feedback.className = styles.feedback;
         comments.forEach(comment => {
             feedback.appendChild(this._drawComment(comment));
         });
 
-        content.appendChild(title);
-        content.appendChild(author);
-        content.appendChild(body);
-        content.appendChild(feedback);
-        
-        block.appendChild(banner);
+        text.appendChild(title);
+        text.appendChild(author);
+        text.appendChild(body);
+
+        content.appendChild(banner);
+        content.appendChild(text);
+
         block.appendChild(content);
-        
+        block.appendChild(feedback);
+
         return block;
     }
 

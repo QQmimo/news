@@ -1,12 +1,6 @@
 export class RequestApplication {
     async get(url) {
-        const response = await fetch(url,
-            {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json'
-                }
-            });
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(response.statusText);
         }

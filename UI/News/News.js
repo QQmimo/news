@@ -1,4 +1,5 @@
 import { NewsFramework } from "../../Frameworks";
+import { Message, MessageType } from "../../UI";
 import styles from "./News.module.scss";
 
 export class News {
@@ -17,13 +18,18 @@ export class News {
     async _drawList() {
         const list = document.createElement('div');
         list.className = styles.news_list;
+        try {
+            document.body.appendChild(Message.show('Please, wait...', 'loading posts', MessageType.Loading));
+            const news = await this._NewsFramework.getNews();
 
-        const news = await this._NewsFramework.getNews();
-
-        news.forEach(post => {
-            list.appendChild(this._drawPost(post));
-        });
-
+            news.forEach(post => {
+                list.appendChild(this._drawPost(post));
+            });
+            Message.clearMessage();
+        }
+        catch (er) {
+            list.appendChild(Message.show('Error', `Error while load news data. ${er.message}`, MessageType.Error));
+        }
         return list;
     }
 

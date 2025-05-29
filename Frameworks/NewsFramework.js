@@ -1,3 +1,4 @@
+import { Data } from "../Domain";
 import { CommentRepository, NewsRepository, UserRepository } from "../Repositories";
 
 export class NewsFramework {
@@ -9,7 +10,7 @@ export class NewsFramework {
         return {
             Post: post,
             Author: author,
-            ImageUrl: `https://placehold.co/100x100?text=${post.title.replace(/ /g, '+')}`
+            ImageUrl: `${Data.API_IMAGE_URL}/200x200?text=${post.title.replace(/ /g, '+')}`
         }
     }
 

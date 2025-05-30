@@ -19,7 +19,7 @@ export class News {
         const list = document.createElement('div');
         list.className = styles.news_list;
         try {
-            document.body.appendChild(Message.show('Please, wait...', 'loading posts', MessageType.Loading));
+            Message.show('Please, wait...', 'loading posts', MessageType.Loading);
             const news = await this._NewsFramework.getNews();
 
             news.forEach(post => {
@@ -28,7 +28,7 @@ export class News {
             Message.clearMessage();
         }
         catch (er) {
-            list.appendChild(Message.show('Error', `Error while load news data. ${er.message}`, MessageType.Error));
+            Message.show('Error', `Error while load news data. ${er.message}`, MessageType.Error);
         }
         return list;
     }
@@ -79,8 +79,10 @@ export class News {
     }
 
     async _drawView(id) {
+        Message.show('Please, wait...', 'loading view', MessageType.Loading);
         const post = await this._NewsFramework.getNewsById(id);
         const comments = await this._NewsFramework.getComments(post.Post.id);
+        Message.clearMessage();
 
         const block = document.createElement('div');
         block.className = styles.view;

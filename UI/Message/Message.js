@@ -9,15 +9,19 @@ export const MessageType = {
 export class Message {
     static show(title, text, type = MessageType.Information) {
         this.clearMessage();
-        const message = document.createElement('div');
-        message.id = 'message';
-        message.classList.add(styles.message);
-        message.classList.add(type === MessageType.Information || type === MessageType.Loading ? styles.information : styles.error);
+        const messageBlock = document.createElement('div');
+        messageBlock.id = 'message';
+        messageBlock.classList.add(styles.message);
+        messageBlock.classList.add(type === MessageType.Information || type === MessageType.Loading ? styles.information : styles.error);
 
         const contentBlock = document.createElement('div');
+        contentBlock.className = styles.content;
 
-
-        const loader = document.createElement('div');
+        if (type === MessageType.Loading) {
+            const loaderBlock = document.createElement('div');
+            loaderBlock.className = styles.loader;
+            messageBlock.appendChild(loaderBlock);
+        }
 
         const titleBlock = document.createElement('div');
         titleBlock.className = styles.title;
@@ -27,11 +31,13 @@ export class Message {
         textBlock.className = styles.text;
         textBlock.textContent = text;
 
-        message.appendChild(titleBlock);
-        message.appendChild(textBlock);
+        contentBlock.appendChild(titleBlock);
+        contentBlock.appendChild(textBlock);
+        messageBlock.appendChild(contentBlock);
 
-        return message;
-    }    
+        document.body.appendChild(messageBlock);
+        return messageBlock;
+    }
 
     static clearMessage() {
         const message = document.querySelector('#message');

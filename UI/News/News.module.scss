@@ -57,6 +57,7 @@
     padding: 20px;
     gap: 10px;
     align-items: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     &_banner {
         height: 400px;
@@ -67,17 +68,19 @@
         flex-direction: row;
         flex: 1;
         gap: 10px;
-    }
 
-    .comments_list {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
+        .title {
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        
+        .author {
+            font-size: 10pt;
+            color: gray;
+        }
 
-    .feedback {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        .body {
+            font-size: 12pt;
+        }
     }
 }

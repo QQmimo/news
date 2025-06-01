@@ -34,7 +34,7 @@ export class NewsFramework {
         return this._createPost(post, author);
     }
 
-    async getComments(postId) {
+    async getNewsComments(postId) {
         return await this._CommentRepository.getComments(postId);
     }
 }

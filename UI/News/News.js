@@ -1,5 +1,5 @@
 import { NewsFramework } from "../../Frameworks";
-import { Message, MessageType } from "../../UI";
+import { Comments, Message, MessageType } from "../../UI";
 import styles from "./News.module.scss";
 
 export class News {
@@ -79,63 +79,51 @@ export class News {
     }
 
     async _drawView(id) {
-        Message.show('Please, wait...', 'loading view', MessageType.Loading);
-        const post = await this._NewsFramework.getNewsById(id);
-        const comments = await this._NewsFramework.getComments(post.Post.id);
-        Message.clearMessage();
-
         const block = document.createElement('div');
         block.className = styles.view;
 
-        const content = document.createElement('div');
-        content.className = styles.view_content;
+        try {
+            Message.show('Please, wait...', 'loading view', MessageType.Loading);
+            const post = await this._NewsFramework.getNewsById(id);
+            Message.clearMessage();
 
-        const banner = document.createElement('img');
-        banner.className = styles.view_banner;
-        banner.src = post.ImageUrl;
+            const content = document.createElement('div');
+            content.className = styles.view_content;
 
-        const text = document.createElement('div');
+            const banner = document.createElement('img');
+            banner.className = styles.view_banner;
+            banner.src = post.ImageUrl;
 
-        const title = document.createElement('div');
-        title.textContent = post.Post.title;
+            const text = document.createElement('div');
 
-        const author = document.createElement('div');
-        author.textContent = post.Author.name;
+            const title = document.createElement('div');
+            title.className = styles.title;
+            title.textContent = post.Post.title;
 
-        const body = document.createElement('div');
-        body.textContent = post.Post.body;
+            const author = document.createElement('div');
+            author.className = styles.author;
+            author.textContent = post.Author.name;
 
-        const feedback = document.createElement('div');
-        feedback.className = styles.feedback;
-        comments.forEach(comment => {
-            feedback.appendChild(this._drawComment(comment));
-        });
+            const body = document.createElement('div');
+            body.className = styles.body;
+            body.textContent = post.Post.body;
 
-        text.appendChild(title);
-        text.appendChild(author);
-        text.appendChild(body);
+            const feedback = await new Comments().render(post);
 
-        content.appendChild(banner);
-        content.appendChild(text);
+            text.appendChild(title);
+            text.appendChild(author);
+            text.appendChild(body);
 
-        block.appendChild(content);
-        block.appendChild(feedback);
+            content.appendChild(banner);
+            content.appendChild(text);
+
+            block.appendChild(content);
+            block.appendChild(feedback);
+        }
+        catch (er) {
+            Message.show('Error', `Error while load view. ${er.message}`, MessageType.Error);
+        }
 
         return block;
-    }
-
-    _drawComment(comment) {
-        const commentBlock = document.createElement('div');
-
-        const email = document.createElement('div');
-        email.textContent = comment.email;
-
-        const body = document.createElement('div');
-        body.textContent = comment.body;
-
-        commentBlock.appendChild(email);
-        commentBlock.appendChild(body);
-
-        return commentBlock;
     }
 }

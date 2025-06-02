@@ -6,8 +6,8 @@ export class News {
     _NewsFramework = new NewsFramework();
 
     async render() {
-        if (window.location.search) {
-            const postId = window.location.search.split('?post=')?.[1];
+        if (window.location.search.startsWith('?post=')) {
+            const postId = window.location.search.split('?post=')[1];
             return await this._drawView(postId);
         }
         else {

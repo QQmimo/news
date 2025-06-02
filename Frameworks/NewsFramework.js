@@ -9,20 +9,20 @@ export class NewsFramework {
     _createPost(post, author) {
         return {
             Post: post,
-            Author: author,
-            ImageUrl: `${Data.API_IMAGE_URL}/200x200?text=${post.title.replace(/ /g, '+')}`
+            Author: { name: `${author.firstName} ${author.lastName}` },
+            ImageUrl: `${Data.API_IMAGE_URL}/${post.title.replace(/ /g, '+')}/200`
         }
     }
 
     async getNews() {
-        const allNews = await this._NewsRepository.getAllNews() ?? [];
-        const allUsers = await this._UserRepository.getUsers() ?? [];
+        const allNews = await this._NewsRepository.getAllNews(32) ?? { posts: [] };
 
         const result = [];
-        allNews.forEach(post => {
-            const newsPost = this._createPost(post, allUsers.find(user => user.id === post.userId));
+        for (let post of allNews.posts) {
+            const author = await this._UserRepository.getUserById(post.userId);
+            const newsPost = this._createPost(post, author);
             result.push(newsPost);
-        });
+        }
 
         return result;
     }

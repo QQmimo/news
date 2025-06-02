@@ -12,7 +12,10 @@ export class Comments {
             const allComments = await this._NewsFramework.getNewsComments(post.Post.id);
             Message.clearMessage();
             commentsBlock.className = styles.comments;
-            allComments.forEach(comment => {
+            commentsBlock.textContent = 'Comments:';
+
+
+            allComments.comments.forEach(comment => {
                 commentsBlock.appendChild(this._drawComment(comment));
             });
         }
@@ -28,7 +31,7 @@ export class Comments {
 
         const email = document.createElement('div');
         email.className = styles.email;
-        email.textContent = comment.email;
+        email.textContent = comment.user.fullName;
 
         const body = document.createElement('div');
         body.className = styles.body;
